@@ -3,7 +3,7 @@ title: "THM - Picke Rick"
 author: NiBi
 lang: "en"
 categories : ['Try Hack Me']
-tags : ['CTF', 'THM','sudo','easy']
+tags : ['CTF', 'THM','easy']
 titlepage: true
 toc: true
 toc-own-page: true
