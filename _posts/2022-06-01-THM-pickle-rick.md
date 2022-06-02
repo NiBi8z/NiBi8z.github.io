@@ -154,7 +154,7 @@ RldNVnBXVFZWV2FHVnFRVDA9PSAtLT4KICA8L2Rpdj4KPC9ib2R5Pgo8L2h0bWw+Cg==
 
 Decoded content 
 
-```Shell
+```shell
   <?php
 session_start();
 

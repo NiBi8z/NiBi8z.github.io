@@ -30,7 +30,7 @@ panel:
 copyright:
   # Shown at the bottom of the post
   license:
-    template: This post is licensed under :LICENSE_NAME by the author.
+    template: ""
     name: CC BY 4.0
     link: https://creativecommons.org/licenses/by/4.0/
 
@@ -76,3 +76,4 @@ post:
 categories:
   category_measure: categories
   post_measure: posts
+
