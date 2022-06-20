@@ -9,15 +9,13 @@ toc: true
 toc-own-page: true
 ---
 
-challenge link : https://cryptohack.org/courses/public-key/manyprime/
 
 
 ### Instructions : 
 
-Using one prime factor was definitely a bad idea so I'll try using over 30 instead.
+We have a supercomputer at work, so I've made sure my encryption is secure by picking massive numbers!
 
- If it's taking forever to factorise, read up on factorisation algorithms and make sure you're using one that's optimised for this scenario.
-
+source.py
 
 output.txt
 
