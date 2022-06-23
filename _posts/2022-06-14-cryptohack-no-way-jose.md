@@ -3,7 +3,7 @@ title: "CryptoHack - No way jose"
 author: NiBi
 lang: "en"
 categories : ['Crypto']
-tags : ['Challenge', 'Cryptohack','easy','JWT','JSON','crypto','web']
+tags : ['Challenge', 'Cryptohack','JWT','JSON','crypto','web']
 titlepage: true
 toc: true
 toc-own-page: true
@@ -15,7 +15,7 @@ In this challenge we are suppose to exploit a code based on JSON WEB TOKENS.
 as explained on the "token application" challenge : JavaScript Object Signing and Encryption (JOSE) is a framework specifying ways to securely transmit information on the internet. It's most well-known for JSON Web Tokens (JWTs), which are used to authorise yourself on a website or application. JWTs typically do this by storing your "login session" in your browser after you have authenticated yourself by entering your username and password. In other words, the website gives you a JWT that contains your user ID, and can be presented to the site to prove who you are without logging in again
 
 
-On this challenge we have to use this python code :
+In this challenge we have to use this python code :
 
 ```python
 import base64
