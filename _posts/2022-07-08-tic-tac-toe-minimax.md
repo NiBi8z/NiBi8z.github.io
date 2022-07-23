@@ -23,7 +23,7 @@ The problem is that the AI has to play a lot for it to be reliable. So in theory
 
 - AI with [Minimax](https://en.wikipedia.org/wiki/Minimax  ): Minimax is a basic decision making algorithm. It is simple to set up and will allow the AI to always make the right decision.
 Before playing each move, the AI will look at all the possibilities of the game to choose the best one. In a game like tic-tac-toe there are not many possibilities so the AI can study them all. The advantage is that the AI will never make a mistake because it will know all the possible situations. In tic-tac-toe, if you don't make a mistake you can't lose and you'll make a tie at worst. If your opponent makes a mistake, you win. 
-This algorithm is very useful, but it cannot be used in poker, for example, because there are too many possible hands. It will then be necessary to turn to Reinforcement learning because even if there will be a margin of error, the AI will learn and become stronger and stronger.
+This algorithm is very useful, but it cannot be used in poker, for example, because there are too many possible hands. It will then be necessary to turn to Reinforcement learning because even if there will be a margin of error, the AI will learn and become stronger and stronger. Minimax optimization exists to use minimax even if there is many possibilities like the [Depth Limited Minimax](https://www.reddit.com/r/learnprogramming/comments/260s1y/algorithm_how_to_choose_an_appropriate_depth_for/)
 
 But before making an AI, we need a tic tac toe game !
 
